@@ -1,2 +1,2 @@
-# mg42
-mg42 expansion library to rtcwpub
+# rtcwmg42
+mg42 library expansion based on rtcwpub
