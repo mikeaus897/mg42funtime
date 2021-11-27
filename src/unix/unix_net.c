@@ -755,7 +755,7 @@ const char	*NET_AdrToString (netadr_t a)
 		struct sockaddr_storage sadr;
 
 		memset(&sadr, 0, sizeof(sadr));
-		NetadrToSockadr(&a, (struct sockaddr *) &sadr);
+		NetadrToSockadr(&a, (struct sockaddr_in *) &sadr);
 		Sys_SockaddrToString(s, sizeof(s), (struct sockaddr *) &sadr);
 	}
 
@@ -888,7 +888,7 @@ void Sys_SendPacket( int length, const void *data, netadr_t to ) {
 
 
 	memset(&addr, 0, sizeof(addr));
-	NetadrToSockadr( &to, (struct sockaddr *) &addr );
+	NetadrToSockadr( &to, (struct sockaddr_in *) &addr );
 
 	if( usingSocks && to.type == NA_IP ) {
 		socksBuf[0] = 0;	// reserved
