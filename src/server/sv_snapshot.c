@@ -863,7 +863,7 @@ void SV_SendClientSnapshot( client_t *client ) {
 	SV_WriteSnapshotToClient( client, &msg );
 
 	// Add any download data if the client is downloading
-	SV_WriteDownloadToClient( client, &msg );
+//	SV_WriteDownloadToClient( client, &msg );
 
 	// check for overflow
 	if ( msg.overflowed ) {

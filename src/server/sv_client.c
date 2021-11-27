@@ -1819,9 +1819,11 @@ static void SV_UserMove( client_t *cl, msg_t *msg, qboolean delta ) {
 	}
 
 	// save time for ping calculation
-	if (cl->frames[cl->messageAcknowledge & PACKET_MASK].messageAcked == -1) {
+/*	if (cl->frames[cl->messageAcknowledge & PACKET_MASK].messageAcked == -1) {
 		cl->frames[cl->messageAcknowledge & PACKET_MASK].messageAcked = msg->time_received;
 	}
+*/
+	cl->frames[cl->messageAcknowledge & PACKET_MASK].messageAcked = svs.time;
 
 	// TTimo
 	// catch the no-cp-yet situation before SV_ClientEnterWorld
