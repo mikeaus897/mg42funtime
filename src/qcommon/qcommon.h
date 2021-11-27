@@ -32,6 +32,11 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "../qcommon/cm_public.h"
 
+#ifndef __GNUC__
+#ifndef __attribute__
+#define __attribute__(x)
+#endif
+#endif
 //#define	PRE_RELEASE_DEMO
 
 //============================================================================
@@ -147,6 +152,7 @@ NET
 //#define	MAX_RELIABLE_COMMANDS	128			// max string commands buffered for restransmit
 #define MAX_RELIABLE_COMMANDS   256 // bigger!
 
+#define NET_ENABLEV4            0x01 
 typedef enum {
 	NA_BOT,
 	NA_BAD,                 // an address lookup failed
@@ -162,6 +168,7 @@ typedef enum {
 	NS_SERVER
 } netsrc_t;
 
+#define NET_ADDRSTRMAXLEN 48
 typedef struct {
 	netadrtype_t type;
 
@@ -169,6 +176,7 @@ typedef struct {
 	byte ipx[10];
 
 	unsigned short port;
+	unsigned long  scope_id;	
 } netadr_t;
 
 typedef struct
@@ -181,19 +189,30 @@ typedef struct
 
 void        NET_Init( void );
 void        NET_Shutdown( void );
-void        NET_Restart( void );
+//void        NET_Restart( void );
+void		NET_Restart_f(void);
+
 void        NET_Config( qboolean enableNetworking );
+void		NET_FlushPacketQueue(void);
 
 void        NET_SendPacket( netsrc_t sock, int length, const void *data, netadr_t to );
-void QDECL NET_OutOfBandPrint( netsrc_t net_socket, netadr_t adr, const char *format, ... );
+#ifndef _WIN32
+void		QDECL NET_OutOfBandPrint(netsrc_t net_socket, netadr_t adr, const char* format, ...) __attribute__((format(printf, 3, 4)));
+#else
+void QDECL NET_OutOfBandPrint(netsrc_t net_socket, netadr_t adr, const char* format, ...);
+#endif
 void QDECL NET_OutOfBandData( netsrc_t sock, netadr_t adr, byte *format, int len );
 
 qboolean    NET_CompareAdr( netadr_t a, netadr_t b );
+qboolean	NET_CompareBaseAdrMask(netadr_t a, netadr_t b, int netmask); 
 qboolean    NET_CompareBaseAdr( netadr_t a, netadr_t b );
 qboolean    NET_IsLocalAddress( netadr_t adr );
 const char  *NET_AdrToString( netadr_t a );
+const char	*NET_AdrToStringwPort(netadr_t a);
 qboolean    NET_StringToAdr( const char *s, netadr_t *a );
 qboolean    NET_GetLoopPacket( netsrc_t sock, netadr_t *net_from, msg_t *net_message );
+void		NET_JoinMulticast6(void); 
+void		NET_LeaveMulticast6(void);
 void        NET_Sleep( int msec );
 
 
@@ -201,8 +220,8 @@ void        NET_Sleep( int msec );
 #define MAX_MSGLEN              32768       // max length of a message, which may
 //#define	MAX_MSGLEN				16384		// max length of a message, which may
 // be fragmented into multiple packets
-#define MAX_DOWNLOAD_WINDOW         8       // max of eight download frames
-#define MAX_DOWNLOAD_BLKSIZE        2048    // 2048 byte block chunks
+#define MAX_DOWNLOAD_WINDOW         48       // max of eight download frames
+#define MAX_DOWNLOAD_BLKSIZE        1024    // 2048 byte block chunks
 
 
 /*
@@ -232,6 +251,8 @@ typedef struct {
 	int unsentFragmentStart;
 	int unsentLength;
 	byte unsentBuffer[MAX_MSGLEN];
+	int		lastSentTime; 
+	int		lastSentSize;
 
 #if _DEBUG
 #define MAX_LATENCY_MESSAGES 256
@@ -978,6 +999,11 @@ void SV_StreamedPacketEvent( netadr_t from, msg_t *msg );
 qboolean SV_GameCommand( void );
 void SV_SendExternalIpRequest(void);
 
+int SV_SendDownloadMessages(void);
+int SV_FrameMsec(void);
+int SV_SendQueuedPackets(void);
+void Com_RunAndTimeServerPacket(netadr_t* evFrom, msg_t* buf);
+void Cmd_TokenizeStringIgnoreQuotes(const char* text_in);
 
 //
 // UI interface
@@ -1196,6 +1222,10 @@ http_response *http_parse(char *msg, int msg_len);
 #define CL_ENCODE_START     12
 #define CL_DECODE_START     4
 
+#define DLF_ENABLE 1
+#define DLF_NO_REDIRECT 2
+#define DLF_NO_UDP 4
+#define DLF_NO_DISCONNECT 8
 // TTimo
 // dll checksuming stuff, centralizing OS-dependent parts
 // *_SHIFT is the shifting we applied to the reference string

@@ -272,6 +272,61 @@ void Netchan_Transmit( netchan_t *chan, int length, const byte *data ) {
 	}
 }
 
+typedef struct packetQueue_s {
+	struct packetQueue_s* next;
+	int length;
+	byte* data;
+	netadr_t to;
+	int release;
+} packetQueue_t;
+
+packetQueue_t* packetQueue = NULL;
+
+static void NET_QueuePacket(int length, const void* data, netadr_t to, int offset)
+{
+	packetQueue_t* new, * next = packetQueue;
+
+	if (offset > 999)
+		offset = 999;
+
+	new = S_Malloc(sizeof(packetQueue_t));
+	new->data = S_Malloc(length);
+	Com_Memcpy(new->data, data, length);
+	new->length = length;
+	new->to = to;
+	new->release = Sys_Milliseconds() + (int)((float)offset / com_timescale->value);
+	new->next = NULL;
+
+	if (!packetQueue) {
+		packetQueue = new;
+		return;
+	}
+	while (next) {
+		if (!next->next) {
+			next->next = new;
+			return;
+		}
+		next = next->next;
+	}
+}
+
+void NET_FlushPacketQueue(void)
+{
+	packetQueue_t* last;
+	int now;
+
+	while (packetQueue) {
+		now = Sys_Milliseconds();
+		if (packetQueue->release >= now)
+			break;
+		Sys_SendPacket(packetQueue->length, packetQueue->data,
+			packetQueue->to);
+		last = packetQueue;
+		packetQueue = packetQueue->next;
+		Z_Free(last->data);
+		Z_Free(last);
+	}
+}
 /*
 =================
 Netchan_Process
@@ -440,6 +495,7 @@ qboolean Netchan_Process( netchan_t *chan, msg_t *msg ) {
 
 
 //==============================================================================
+#ifdef _WIN32
 
 /*
 ===================
@@ -527,7 +583,7 @@ qboolean    NET_CompareAdr( netadr_t a, netadr_t b ) {
 qboolean    NET_IsLocalAddress( netadr_t adr ) {
 	return adr.type == NA_LOOPBACK;
 }
-
+#endif
 
 
 /*

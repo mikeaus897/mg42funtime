@@ -680,7 +680,7 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 	}
 }
 
-
+#if 0
 /*
 ====================
 SV_RateMsec
@@ -721,6 +721,50 @@ static int SV_RateMsec( client_t *client, int messageSize ) {
 
 	return rateMsec;
 }
+#endif
+/*
+====================
+SV_RateMsec
+
+Return the number of msec a given size message is supposed
+to take to clear, based on the current rate
+TTimo - use sv_maxRate or sv_dl_maxRate depending on regular or downloading client
+====================
+*/
+#ifdef _WIN32
+#define HEADER_RATE_BYTES   48      // include our header, IP header, and some overhead
+int SV_RateMsec(client_t* client, int messageSize) {
+	int rate;
+	int rateMsec;
+	int maxRate;
+
+	// individual messages will never be larger than fragment size
+	if (messageSize > 1500) {
+		messageSize = 1500;
+	}
+	// low watermark for sv_maxRate, never 0 < sv_maxRate < 1000 (0 is no limitation)
+	if (sv_maxRate->integer && sv_maxRate->integer < 1000) {
+		Cvar_Set("sv_MaxRate", "1000");
+	}
+	rate = client->rate;
+	// work on the appropriate max rate (client or download)
+	if (!*client->downloadName) {
+		maxRate = sv_maxRate->integer;
+	}
+	else
+	{
+		maxRate = sv_dl_maxRate->integer;
+	}
+	if (maxRate) {
+		if (maxRate < rate) {
+			rate = maxRate;
+		}
+	}
+	rateMsec = (messageSize + HEADER_RATE_BYTES) * 1000 / rate;
+
+	return rateMsec;
+}
+#endif
 
 /*
 =======================
@@ -734,7 +778,8 @@ void SV_SendMessageToClient( msg_t *msg, client_t *client ) {
 
 	// record information about the message
 	client->frames[client->netchan.outgoingSequence & PACKET_MASK].messageSize = msg->cursize;
-	client->frames[client->netchan.outgoingSequence & PACKET_MASK].messageSent = Sys_Milliseconds();
+	//client->frames[client->netchan.outgoingSequence & PACKET_MASK].messageSent = Sys_Milliseconds();
+	client->frames[client->netchan.outgoingSequence & PACKET_MASK].messageSent = svs.time; // fix ping glitch due to dlrate
 	client->frames[client->netchan.outgoingSequence & PACKET_MASK].messageAcked = -1;
 
 	// send the datagram
@@ -751,7 +796,11 @@ void SV_SendMessageToClient( msg_t *msg, client_t *client ) {
 	}
 
 	// normal rate / snapshotMsec calculation
-	rateMsec = SV_RateMsec( client, msg->cursize );
+#ifdef _WIN32
+	rateMsec = SV_RateMsec(client, msg->cursize);
+#else
+	rateMsec = SV_RateMsec(client);
+#endif
 
 	// TTimo - during a download, ignore the snapshotMsec
 	// the update server on steroids, with this disabled and sv_fps 60, the download can reach 30 kb/s
@@ -853,13 +902,19 @@ void SV_SendClientMessages( void ) {
 			continue;       // not time yet
 		}
 
+		if (*c->downloadName)
+			continue;		// Client is downloading, don't send snapshots
 		numclients++;       // NERVE - SMF - net debugging
 
 		// send additional message fragments if the last message
 		// was too large to send at once
 		if ( c->netchan.unsentFragments ) {
 			c->nextSnapshotTime = svs.time +
-								  SV_RateMsec( c, c->netchan.unsentLength - c->netchan.unsentFragmentStart );
+#ifndef _WIN32
+				SV_RateMsec(c);
+#else
+				SV_RateMsec(c, c->netchan.unsentLength - c->netchan.unsentFragmentStart);
+#endif
 			SV_Netchan_TransmitNextFragment( c );
 			continue;
 		}

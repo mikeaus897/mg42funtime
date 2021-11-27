@@ -347,6 +347,9 @@ extern cvar_t  *sv_gameskill;
 // TTimo - autodl
 extern cvar_t  *sv_dl_maxRate;
 
+extern cvar_t	*sv_dlRate;
+extern cvar_t	*sv_minRate;
+extern cvar_t	*sv_maxRate;
 #ifdef FEATURE_ANTICHEAT
 extern cvar_t *wh_active;
 extern cvar_t *wh_bbox_horz;
@@ -409,7 +412,12 @@ void SV_DropClient( client_t *drop, const char *reason );
 void SV_ExecuteClientCommand( client_t *cl, const char *s, qboolean clientOK );
 void SV_ClientThink( client_t *cl, usercmd_t *cmd );
 
-void SV_WriteDownloadToClient( client_t *cl, msg_t *msg );
+//void SV_WriteDownloadToClient( client_t *cl, msg_t *msg );
+int SV_WriteDownloadToClient(client_t* cl, msg_t* msg);
+#ifndef _WIN32
+int SV_SendQueuedMessages(void);
+int SV_RateMsec(client_t* client);
+#endif
 
 //
 // sv_ccmds.c
@@ -531,7 +539,11 @@ void SV_ClipToEntity( trace_t *trace, const vec3_t start, const vec3_t mins, con
 // sv_net_chan.c
 //
 void SV_Netchan_Transmit( client_t *client, msg_t *msg );
-void SV_Netchan_TransmitNextFragment( client_t *client );
+#ifdef _WIN32
+void SV_Netchan_TransmitNextFragment(client_t* client);
+#else
+int SV_Netchan_TransmitNextFragment(client_t* client);
+#endif
 qboolean SV_Netchan_Process( client_t *client, msg_t *msg );
 
 // L0 - make this accesible

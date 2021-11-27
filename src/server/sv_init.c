@@ -844,6 +844,11 @@ void SV_Init( void ) {
 	sv_tourney = Cvar_Get( "g_noTeamSwitching", "0", CVAR_ARCHIVE );                               // NERVE - SMF
 	sv_dailyRestartHour = Cvar_Get("sv_dailyRestartHour", "-1", CVAR_ARCHIVE);
 
+
+	sv_dlRate = Cvar_Get("sv_dlRate", "100", CVAR_TEMP);
+	sv_minRate = Cvar_Get("sv_minRate", "0", CVAR_TEMP);
+	sv_maxRate = Cvar_Get("sv_maxRate", "0", CVAR_TEMP);
+
 	// systeminfo
 	Cvar_Get( "sv_cheats", "0", CVAR_SYSTEMINFO );
 	sv_serverid = Cvar_Get( "sv_serverid", "0", CVAR_SYSTEMINFO | CVAR_ROM );
