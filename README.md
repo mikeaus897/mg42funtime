@@ -8,10 +8,8 @@ nasm
 gcc
 
 compilation:
-
-for wolfded.x86 - /src/unix/make server
-
-for qagame.mp.i386.so - /src/game/make
+for wolfded.x86 - in /src/unix/make server
+for qagame.mp.i386.so - in /src/game/make
 
 additional notes :
 make sure start script (start.sh) has executable attributes and rights
