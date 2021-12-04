@@ -8,6 +8,7 @@ nasm
 gcc
 
 compilation:
+
 for wolfded.x86 - /src/unix/make server
 
 for qagame.mp.i386.so - /src/game/make
