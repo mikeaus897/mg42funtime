@@ -3623,7 +3623,7 @@ void Cmd_TinyAutomg42_f(gentity_t *ent)
 
 void Cmd_MicroAutomg42_f(gentity_t *ent)
 {
-	TryDroppingAutomg42(ent, 0.1f);
+	TryDroppingAutomg42(ent, 0.2f);
 }
 
 void Cmd_BigAutomg42_f(gentity_t *ent)
