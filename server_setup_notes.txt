@@ -1,0 +1,16 @@
+// Server setup notes, comments and additional info
+
+There are 3 places wolfded.x86 gameserver console it will look for datafiles
+1st: [specified fs_homepath in start script]
+2nd: /home/[user]/.wolf/
+3rd: /usr/local/games/wolfenstein/
+4th: /root/.wolf/   (if as logged in as root)
+
+
+
+Linux server start.sh scripts :
+./wolfded.x86 +set fs_homepath "/root/.wolf" +set fs_game rtcwPub +set dedicated 2 +set net_port 27960 +set vm_game 0 +set sv_pure 0 +set com_hunkmegs 200 +exec deathmatch.cfg
+note: chmod 777 start.sh (gives start.sh file exec privilages so can be executed as gameserver start script: ./start.sh )
+
+Windows server start.bat scripts :
+WolfDED.exe +set fs_game rtcwPub +set dedicated 2 +set net_port 27960 +set com_hunkMegs 64 +set com_zoneMegs 24 +set vm_game 0 +exec server.cfg
