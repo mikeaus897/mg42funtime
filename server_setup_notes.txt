@@ -14,3 +14,14 @@ note: chmod 777 start.sh (gives start.sh file exec privilages so can be executed
 
 Windows server start.bat scripts :
 WolfDED.exe +set fs_game rtcwPub +set dedicated 2 +set net_port 27960 +set com_hunkMegs 64 +set com_zoneMegs 24 +set vm_game 0 +exec server.cfg
+
+
+
+To start rtcw gameserver on debian server after reboot :
+Login:
+cd //
+cd /wolf
+screen
+./start.sh
+close console
+
