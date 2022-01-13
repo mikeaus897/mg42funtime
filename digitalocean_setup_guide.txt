@@ -1,0 +1,128 @@
+- How to create DigitalOcean custom image for rtcw server - guide
+- using Debian 11.2 Bullseye 32-bit version (32-bit PC (i386)) official image
+- and free vmware esxi 7 hypervisor
+-
+- Info: https://www.digitalocean.com/community/tutorials/how-to-create-an-image-of-your-linux-environment-and-launch-it-on-digitalocean
+- Debian 11.2 iso image : https://cdimage.debian.org/debian-cd/current/i386/iso-cd/
+                          debian-11.2.0-i386-netinst.iso
+- VMware ESXi 7 iso image : https://my.vmware.com/en/web/vmware/evalcenter?p=free-esxi7
+                            VMware-VMvisor-Installer-7.0U3-18644231.x86_64.iso
+- WinSCP 5.19.5 : https://winscp.net/eng/download.php
+- Putty 0.76 : https://www.chiark.greenend.org.uk/~sgtatham/putty/
+- Total Commander 10.00 : https://www.ghisler.com/download.htm
+
+
+
+--- 1. Create ESXi Virtual Machine
+create esxi vm: 1cpu, 1gb ram, 25gb disk
+mount image: debian-11.2.0-i386-netinst.iso
+install server only with SSH
+
+start server, log in and install following cloud essentials :
+sudo apt install cloud-init (to install cloud-init)
+sudo apt install mc         (to install midnight commander, midnight-commander.org)
+sudo cloud-init clean       (clean up configuration from the initial cloud-init)
+sudo service ssh status     (to check if ssh is installed and working active)
+lsblk                       (to see block device arrangement for system and partition arrangement and sizes)
+lsb_release -a              (to see operating system version)
+hostnamectl                 (to see operating system kernel version
+sudo reboot
+sudo poweroff
+
+
+--- 2. Pull VMDK file from ESXi server using WinSCP
+in VMware ESXi -> Host -> Actions -> Services -> Enable Secure Shell (SSH)
+login to ESXi with WinSCP -> vmfs/volumes/isci.volume.com/debian-11.2.0-i386-netinst - 1/
+                             copy debian-11.2.0-i386-netinst - 1-flat.vmdk
+rename debian-11.2.0-i386-netinst - 1-flat.vmdk to debian.vmdk
+
+
+--- 3. Compress debian.vmdk IMAGE to GZ using Total Commander
+- https://docs.digitalocean.com/products/images/custom-images/
+- notes: can also upload a custom image that meets the above criteria as a compressed gzip or bzip2 file
+pack debian.vmdk with TotalCommander to .gz file (Files -> Pack -> GZ -> OK, outcome: debian.vmdk.gz
+
+
+--- 4. Upload debian.vmdk.gz compressed image to DigitalOcean and add it to DigitalOcean DataCenter regions where want to deploy server
+DigitalOcean -> Images -> Custom Image -> upload debian.vmdk.gz
+DigitalOcean -> More -> Add to region -> Select the regions that you would like your custom image to be available in.:
+                                         NYC1 SFO1 NYC2 NYC3 SFO2 SFO3
+
+
+--- 5. Create DigitalOcean droplet (DigitalOcean cloud server)
+DigitalOcean -> PROJECTS -> mg42funtime sfo -> Create -> Droplets -> debian.vmdk.gz -> Choose a plan: Basic
+                                                                     CPU options: Regular Intel with SSD
+                                                                     $5/mo 1 GB/1 CPU/25GB SSD Disk/1000GB transfer
+                                                                     San Francisco: 3
+                                                                     Authentication: SSH keys A more secure authentication method
+                                                                     Choose your SSH keys: debian
+                                                                     Choose a hostname: debian-1vcpu-1gb-sfo3-01 (default: debian.vmdk.gz-s-1vcpu-1gb-sfo3-01)
+DigitalOcean -> PROJECTS -> mg42funtime sfo -> debian-1vcpu-1gb-sfo3-01; SFO3 / 1GB / 25GB Disk
+
+
+--- 6. To view or edit ssh keys access in DigitalOcean
+DigitalOcean -> Settings -> Security -> SSH keys -> Name: debiansshkey
+                                                    Fingerprint: 11:22:33:44:55:66:77:88:99:00:aa:bb:cc:dd:ee:ff
+                                                    -> More -> Edit -> Edit SSH key
+
+
+--- 7. Create access to server using SSH in Putty
+PuTTY -> Host Name: 100.110.120.130
+         Saved Sessions: 100.110.120.130 debian-1vcpu-1gb-sfo3-01
+         -> Category -> Window -> Columns: 160
+                                  Rows: 48
+         -> Category -> Connection -> SSH -> Auth -> Browse -> id_rsa.ppk (choose the ssh Putty Private Key File .ppk that will be used to login to server in Digitalocean)
+         -> Session -> 100.110.120.130 debian-1vcpu-1gb-sfo3-01 -> Save
+
+
+--- 8. Create DigitalOcean console access via DigitalOcean website
+login to DigitalOcean server with PuTTY -> login as: root -> copy CTRL-C: wget -qO- https://repos-droplet.digitalocean.com/install.sh | sudo bash
+                                                          -> right mouse click in the Putty console
+
+after that in
+DigitalOcean -> PROJECTS -> mg42funtime sfo -> debian-1vcpu-1gb-sfo3-01 -> Access -> Droplet Console, Log in as... root, Launch Droplet Console
+                                                                                     will become available to login and Console will also work to login in via DigitalOcean website directly
+
+Notes: curl -sSL https://repos-droplet.digitalocean.com/install.sh | sudo bash, DOES NOT WORK with Debian
+
+DigitalOcean -> PROJECTS -> mg42funtime sfo -> debian-1vcpu-1gb-sfo3-01 -> Access -> Droplet Console
+                curl -sSL https://repos-droplet.digitalocean.com/install.sh | sudo bash
+                wget -qO- https://repos-droplet.digitalocean.com/install.sh | sudo bash
+
+
+--- 9. First things to check and install
+login to DigitalOcean server using Putty
+sudo apt update
+sudo apt full-upgrade
+lsblk                       (to see block device arrangement for system and partition arrangement and sizes are correct)
+df / -h                     (to see space available on current partition)
+fdisk -l                    (to see main disk and allocated partitions)
+ip addr                     (to see server ip address)
+
+sudo apt install mc
+sudo apt install htop
+sudo apt install nmap          (test: nmap -n -p 1-65000 localhost)
+sudo apt install speedtest-cli (test: speedtest-cli)
+sudo apt install neotech       (test: neofetch)
+sudo apt install screen
+
+sudo apt install make
+sudo apt install nasm
+sudo apt install gcc
+
+
+--- 10. Configure WinSCP for file transfer with DigitalOcean
+WinSCP -> New Site -> Host name: 100.110.120.130
+                      User name: root
+                      -> Advanced -> SSH -> Authentication -> Private key file: id_rsa.ppk (choose the ssh Putty Private Key File .ppk that will be used to login to DigitalOcean server)
+                                                              -> OK
+                                                              -> Save
+
+to change Site name: RMC on 100.110.120.130 -> Rename
+to change folders (Remote and Local directory): LMC on 100.110.120.130 -> Advanced -> Directories -> Remote directory: /
+                                                                                                     Local directory: c:\wolf
+                                                                                                     -> OK -> Save
+
+
+--- 11. now server is ready to compile gameserver library
+
