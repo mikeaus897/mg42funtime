@@ -1,6 +1,6 @@
 - How to create DigitalOcean custom image for rtcw server - guide
 - using Debian 11.2 Bullseye 32-bit version (32-bit PC (i386)) official image
-- and free vmware esxi 7 hypervisor
+- and free VMware ESXi 7 hypervisor
 -
 - Info: https://www.digitalocean.com/community/tutorials/how-to-create-an-image-of-your-linux-environment-and-launch-it-on-digitalocean
 - Debian 11.2 iso image : https://cdimage.debian.org/debian-cd/current/i386/iso-cd/
