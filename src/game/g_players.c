@@ -43,7 +43,7 @@ void Cmd_GetStatus_f(gentity_t *ent) {
 
 			// player is connecting
 			if (cl->pers.connected == CON_CONNECTING) {
-				CP(va("print \"%-2d :                 : ^3>>Connecting<<  ^7:                 :      :       \n\"", client_num));
+				CP(va("print \"%-2d : %s : map dl/connect  : Unknown         :      :       \n\"", client_num, TablePrintableColorName(cl->pers.netname, 15), country_name));
 				continue;
 			}
 
