@@ -36,10 +36,10 @@ void Cmd_GetStatus_f(gentity_t *ent) {
 	}
 
 	CP(va("print \"\n^3Mod: ^7%s \n^3Server: ^7%s\n%s\"", GAMEVERSION, GetHostname(), server_ip_with_port ? server_ip_with_port : ""));
-	// CP("print \"^3Map: ^7\n\"");
-	CP("print \"^3Game physics: ^7FixedVanilla\n\"");
+	// CP("print \"^3Map: ^7here\n\"");
+	CP("print \"^3Physics: ^7FixedVanilla\n\"");
 	CP("print \"^3-----------------------------------------------------------------------------\n\"");
-	CP("print \"^7CN : Name            : ^3IP              ^7: Country         : Ping ^7: Status     \n\"");
+	CP("print \"^7CN : Name            : ^7IP              ^7: Country         : Ping ^7: Status     \n\"");
 	CP("print \"^3-----------------------------------------------------------------------------\n\"");
 
 	for (client_num = 0; client_num < MAX_CLIENTS; ++client_num) {
