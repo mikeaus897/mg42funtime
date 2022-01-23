@@ -3864,9 +3864,9 @@ void Cmd_DisplayServerCredit_f(gentity_t *ent) {
 	CP("print \"^3-----------------------------------------------------------------------------\n\"");
 	CP(va("print \"^3Powered by: ^7%s \n\"", GAMEVERSION));
 	CP("print \"^3Source Code: ^7github.com/nobowned/rtcwPub\n\"");
-	CP("print \"^3Compile date: ^7here soon \n\"");
+	CP("print \"^3Compile date: ^72022-jan-23 21:54 \n\"");
 	CP("print \"^3Developers: ^7Nihilist, Nobo, Legz, Mikeaus\n\"");
-	CP("print \"^3Testers: ^7Pseudo, Firehot, you?!? :)\n\"");
+	CP("print \"^3Testers: ^7WIN, Pseudo, Firehot, you?!? :)\n\"");
 	CP("print \"^3-----------------------------------------------------------------------------\n\"");
 	CP(va("print \"^3Server Time: ^7%s (EST)\n\"", getDateTime()));
 	CP(va("print \"^3Server Uptime: ^7%s\n\"", time_message));
