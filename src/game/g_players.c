@@ -115,7 +115,7 @@ void Cmd_GetStatus_f(gentity_t *ent) {
 	CP("print \"^3-----------------------------------------------------------------------------\n\"");
 	CP(va("print \"Server Time: ^3%s (EST)\n\"", getDateTime()));
 	CP(va("print \"Server Uptime: ^3%s\n\"", time_message));
-	CP("print \"Library compilation date: ^32022-jan-23 21:54\n\"");
+	// CP("print \"Compile Date: ^32022-jan-23 21:54\n\"");
 	CP("print \"Use ^3/fps ^7to see each player's fps, rate, snaps options\n\"");
 
 	return;
