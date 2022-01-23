@@ -23,7 +23,12 @@ void Cmd_GetStatus_f(gentity_t *ent) {
 	int server_port;
 	char *server_ip_with_port = NULL;
 	char country_name[16];
-
+	
+        // features to display server uptime in getstatus
+	int seconds_elapsed = level.time / 1000;
+	char *time_message = GetTimeMessage(seconds_elapsed);
+        //
+	
 	trap_Cvar_VariableStringBuffer("sv_ipExternal", server_ip, sizeof(server_ip));
 	if (server_ip[0]) {
 		server_port = trap_Cvar_VariableIntegerValue("net_port");
@@ -31,7 +36,8 @@ void Cmd_GetStatus_f(gentity_t *ent) {
 	}
 
 	CP(va("print \"\n^3Mod: ^7%s \n^3Server: ^7%s\n%s\"", GAMEVERSION, GetHostname(), server_ip_with_port ? server_ip_with_port : ""));
-	CP("print \"^3Game physics: ^7Vanilla\n\"");
+	// CP("print \"^3Map: ^7\n\"");
+	CP("print \"^3Game physics: ^7FixedVanilla\n\"");
 	CP("print \"^3-----------------------------------------------------------------------------\n\"");
 	CP("print \"^7CN : Name            : ^3IP              ^7: Country         : Ping ^7: Status     \n\"");
 	CP("print \"^3-----------------------------------------------------------------------------\n\"");
@@ -43,7 +49,7 @@ void Cmd_GetStatus_f(gentity_t *ent) {
 
 			// player is connecting
 			if (cl->pers.connected == CON_CONNECTING) {
-				CP(va("print \"%-2d : %s : map dl/connect  : Unknown         :      :       \n\"", client_num, TablePrintableColorName(cl->pers.netname, 15), country_name));
+				CP(va("print \"%-2d ^7: %s ^7: map dl/connect  ^7: Unknown         :      :            \n\"", client_num, TablePrintableColorName(cl->pers.netname, 15), country_name));
 				continue;
 			}
 
@@ -107,7 +113,10 @@ void Cmd_GetStatus_f(gentity_t *ent) {
 		}
 	}
 	CP("print \"^3-----------------------------------------------------------------------------\n\"");
-	CP(va("print \"Server Time: ^3%s (EST)\n^7Library compilation date: ^32022-jan-13 17:30\n^7Use ^3/fps ^7to see each player's fps\n\"", getDateTime()));
+	CP(va("print \"Server Time: ^3%s (EST)\n\"", getDateTime()));
+	CP(va("print \"Server Uptime: ^3%s\n\"", time_message));
+	CP("print \"Library compilation date: ^32022-jan-23 21:54\n\"");
+	CP("print \"Use ^3/fps ^7to see each player's fps, rate, snaps options\n\"");
 
 	return;
 }
