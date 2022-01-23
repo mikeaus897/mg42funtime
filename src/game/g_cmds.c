@@ -3856,6 +3856,24 @@ void Cmd_DisplayServerUptime_f(gentity_t *ent) {
 	CPS(ent, "sound/multiplayer/dynamite_01.wav");
 }
 
+// mike.aus - added game about/credit/info commands, also in cmds list: static const player_command_t playerCommands
+void Cmd_DisplayServerCredit_f(gentity_t *ent) {
+	int seconds_elapsed = level.time / 1000;
+	char *time_message = GetTimeMessage(seconds_elapsed);
+
+	CP("print \"^3-----------------------------------------------------------------------------\n\"");
+	CP(va("print \"^3Powered by: ^7%s \n\"", GAMEVERSION));
+	CP("print \"^3Source Code: ^7github.com/nobowned/rtcwPub\n\"");
+	CP("print \"^3Compile date: ^7here soon \n\"");
+	CP("print \"^3Developers: ^7Nihilist, Nobo, Legz, Mikeaus\n\"");
+	CP("print \"^3Testers: ^7Pseudo, Firehot, you?!? :)\n\"");
+	CP("print \"^3-----------------------------------------------------------------------------\n\"");
+	CP(va("print \"^3Server Time: ^7%s (EST)\n\"", getDateTime()));
+	CP(va("print \"^3Server Uptime: ^7%s\n\"", time_message));
+	CP("print \"^3-----------------------------------------------------------------------------\n\"");
+	CPS(ent, "sound/multiplayer/dynamite_01.wav");
+}
+
 void Cmd_GiveLife_f(gentity_t *ent) {
 	int i;
 	char argument[ADMIN_ARG_SIZE];
@@ -4145,6 +4163,7 @@ static const player_command_t playerCommands[] = {
 	{ "more", "Displays the next several items (command dependent)", "/more", Cmd_More_f, qfalse },
 	{ "smoke sg", "Throws smoke grenade (must be LT)", "/smoke or /sg", Cmd_Smoke, qfalse },
 	{ "draw_hitboxes" , "Toggles hitbox drawing when g_drawHitBoxes is enabled", "/draw_hitboxes", Cmd_ToggleDrawHitBoxes_f, qfalse },
+	{ "about credit info", "Display server library information", "", Cmd_DisplayServerCredit_f, qfalse },
 #ifdef _DEBUG
 	{ "test", "Secrets!", "/test", Cmd_Test_f, qfalse },
 	{ "test2", "Moar Secrets!", "/test2", Cmd_Test2_f, qfalse },
