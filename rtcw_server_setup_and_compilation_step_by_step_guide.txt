@@ -81,7 +81,7 @@ press X to close PuTTY terminal (now your rtcw gameserver console is running in 
 --- 5. Monitoring and testing server performance
 sudo apt install speedtest-cli   (test your server optimal bandwidth, command: speedtest-cli)
 sudo apt install htop            (monitor server cpu and memory usage anytime, command: htop)
-sudo apt install nmap            (view all open ports access for security, command: nmap -n sT -sU -p 1-65000 localhost)
+sudo apt install nmap            (view all open server ports access for security, command: nmap -n sT -sU -p 1-65000 localhost)
 sudo apt install neofetch        (check Debian server details information, command: neofetch)
 
 
