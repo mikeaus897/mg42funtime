@@ -1,0 +1,97 @@
+- RTCW Server setup and compilation step by step - guide
+- on Debian 11.2 Bullseye 32-bit version (32-bit PC (i386)) official image
+-
+-
+- Linux server: Debian 11.2 Bullseye 32-bit version (32-bit PC (i386)
+- Recommended apps: WinSCP 5.19.5 : https://winscp.net/eng/download.php
+-                   PuTTY 0.76 : https://www.chiark.greenend.org.uk/~sgtatham/putty/
+-
+
+
+
+--- 1. Initial Debian 11.2 Bullseye 32-bit Server setup
+using PuTTY, login to Debian server and install following packages with commands below (required to compile gameserver libraries, start and keep RTCW gameserver running later):
+
+sudo apt install make
+sudo apt install nasm
+sudo apt install gcc
+sudo apt install screen
+
+
+
+--- 2. Compile RTCW gameserver executable and game library
+download mg42funtime-master.zip source code library on your local computer from https://github.com/mikeaus897/mg42funtime
+                                                                                -> Code -> Download ZIP
+
+using WinSCP, login to Debian server and create new folder in server root directory: /wolfcompile
+upload mg42funtime-master.zip to this new created folder: /wolfcompile
+note: to get RTCW gameserver running you need to compile 2 files: wolfded.x86 (gameserver executable)
+                                                                  qagame.mp.i386.so (gameserver library)
+
+using PuTTY, login to server and unzip uploaded source code file mg42funtime-master.zip in /wolfcompile folder and compile source code
+cd //
+cd /wolfcompile
+unzip mg42funtime-master.zip
+
+cd //
+cd /wolfcompile/mg42funtime-master/src/unix
+make server                                   (to compile rtcw gameserver executable: wolfded.x86, command: make server)
+
+cd //
+cd /wolfcompile/mg42funtime-master/src/game
+make                                          (to compile rtcw gameserver library: qagame.mp.i386.so, command: make)
+
+
+
+--- 3. Setup RTCW gameserver
+using WinSCP, create RTCW gameserver folders, and place specific files in specific directories as follows:
+/wolf          (min files required: start.sh, wolfded.x86, banned.txt)
+/wolf/rtcwPub  (min files required: autoexec.cfg, deathmatch.cfg, GeoIP.dat, highVidlowCPU.cfg, language.cfg, mapsrotation.cfg, objective.cfg, qagame.mp.i386.so, shared.cfg)
+/wolf/main     (min files required: mp_pak0.pk3)
+
+using WinSCP
+edit deathmatch.cfg and configure game settings as required
+edit shared.cfg and configure gameserver settings as required
+edit start.sh and configure gameserver folder path: fs_homepath "/wolf"
+
+              - RTCW gameserver folder path notes:
+              There are 3 places wolfded.x86 gameserver console it will look for datafiles
+              1st: [specified fs_homepath in start script]
+              2nd: /home/[user]/.wolf/
+              3rd: /usr/local/games/wolfenstein/
+              4th: /root/.wolf/   (if as logged in as root)
+
+Dont forget to give start.sh file exec privilages so can be executed as gameserver start script: ./start.sh
+cd //
+cd /wolf
+chmod 777 start.sh
+
+
+
+--- 4. Starting RTCW gameserver
+using PuTTY, login to your Debian server type following commands:
+cd //
+cd wolf
+screen -> press ENTER
+./start.sh                      (RTCW gameserver console will start and will keep running)
+press X to close PuTTY terminal (now your rtcw gameserver console is running in Debian server background)
+
+
+
+--- 5. Monitoring and testing server performance
+sudo apt install speedtest-cli   (test your server optimal bandwidth, command: speedtest-cli)
+sudo apt install htop            (monitor server cpu and memory usage anytime, command: htop)
+sudo apt install nmap            (view all open ports access for security, command: nmap -n sT -sU -p 1-65000 localhost)
+sudo apt install neofetch        (check Debian server details information, command: neofetch)
+
+
+
+--- Additional notes:
+--- you can login to Debian server at anytime without interrupting running RTCW gameserver; to monitor, update operating system, check performance, etc.)
+screen -r             (to return to RTCW gameserver console screen background session anytime, press X anytime to close PuTTY terminal without interrupting RTCW gameserver running)
+reboot                (to reboot server)
+sudo apt update
+sudo apt full-upgrade (to update server and keep it updated and secure)
+htop                  (to monitor server cpu performance)
+
+
