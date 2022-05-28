@@ -272,6 +272,7 @@ vmCvar_t	g_ltClips;		// Number of clips in weapon leut starts with
 vmCvar_t	g_pistolClips;		// How many clips pistol gets
 vmCvar_t	g_venomClips;		// How many clips venom starts with
 vmCvar_t	g_mauserClips;		// How many clips mauser starts with
+vmCvar_t	g_panzerClips;		// How many clips panzer starts with   // MIKEAUS added cvar in deathmatch.cfg for g_panzerClips, amount of ammo panzer has in reserve
 vmCvar_t	g_maxTeamPF;		// Max Pf's per team
 vmCvar_t	g_maxTeamSniper;	// Max snipers per team
 vmCvar_t	g_maxTeamVenom;		// Max venoms per team
@@ -611,6 +612,7 @@ cvarTable_t		gameCvarTable[] = {
 	{ &g_pistolClips, "g_pistolClips", "8", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
 	{ &g_venomClips, "g_venomClips", "0", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
 	{ &g_mauserClips, "g_mauserClips", "1", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
+	{ &g_panzerClips, "g_panzerClips", "1", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },   // MIKEAUS added cvar in deathmatch.cfg for g_panzerClips, amount of ammo panzer has in reserve
 	{ &g_maxTeamPF, "g_maxTeamPF", "-1", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
 	{ &g_maxTeamSniper, "g_maxTeamSniper", "-1", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
 	{ &g_maxTeamVenom, "g_maxTeamVenom", "-1", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
