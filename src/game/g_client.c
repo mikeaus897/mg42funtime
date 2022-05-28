@@ -994,6 +994,7 @@ void SetWolfSpawnWeapons( gclient_t *client ) {
 	int		gunClips = g_pistolClips.integer;
 	int		venomClips = g_venomClips.integer;
 	int		mauserClips = g_mauserClips.integer;
+        int		panzerClips = g_panzerClips.integer;   // MIKEAUS added cvar in deathmatch.cfg for g_panzerClips, amount of Clips panzer
 	// nades
 	int		engNades = g_engNades.integer;
 	int		soldNades = g_soldNades.integer;
