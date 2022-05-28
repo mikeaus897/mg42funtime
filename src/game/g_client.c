@@ -1248,7 +1248,8 @@ void SetWolfSpawnWeapons( gclient_t *client ) {
 					client->pers.restrictedWeapon = WP_PANZERFAUST;
 				}
 				COM_BitSet(client->ps.weapons, WP_PANZERFAUST);
-				client->ps.ammo[BG_FindAmmoForWeapon(WP_PANZERFAUST)] = 4;
+				//	client->ps.ammoclip[BG_FindClipForWeapon(WP_PANZERFAUST)] = 1;   // MIKEAUS add this line if you want to set amount of clips in panzer ammo pack
+				client->ps.ammo[BG_FindAmmoForWeapon(WP_PANZERFAUST)] = (panzerClips);   // MIKEAUS added cvar in deathmatch.cfg for g_panzerClips, amount of ammo panzer has in reserve
 				client->ps.weapon = WP_PANZERFAUST;
 				break;
 
