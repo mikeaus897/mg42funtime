@@ -117,6 +117,7 @@ void Cmd_GetStatus_f(gentity_t *ent) {
 	CP(va("print \"Server Uptime: ^3%s\n\"", time_message));
 	// CP("print \"Compile Date: ^32022-jan-23 21:54\n\"");
 	CP("print \"Use ^3/fps ^7to see each player's fps, rate, snaps options\n\"");
+	CPS(ent, "sound/multiplayer/dynamite_01.wav");
 
 	return;
 }
