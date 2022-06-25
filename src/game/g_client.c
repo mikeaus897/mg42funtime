@@ -1134,9 +1134,26 @@ void SetWolfSpawnWeapons( gclient_t *client ) {
 		client->ps.ammoclip[BG_FindClipForWeapon(WP_MEDIC_SYRINGE)] = g_syringes.integer;
 
 		// NERVE - SMF
-		COM_BitSet(client->ps.weapons, WP_MEDKIT);
+		COM_BitSet(client->ps.weapons, WP_MEDKIT);			// MIKEAUS original medpack kit to hit on key 6
 		client->ps.ammoclip[BG_FindClipForWeapon(WP_MEDKIT)] = 1;
 		client->ps.ammo[WP_MEDKIT] = 1;
+
+		// MIKEAUS additional weapons for PC_MEDIC with add on new game features suggested by Firehot
+		// WP_AMMO - ammopack, WP_DYNAMITE - dynamite, WP_PLIERS - pliers
+
+		/*
+		COM_BitSet(client->ps.weapons, WP_AMMO);			// MIKEAUS ammopack kit from PC_LT; add-on to hit on 6, great addon for mg games
+		client->ps.ammo[BG_FindAmmoForWeapon(WP_AMMO)] = 0;
+		client->ps.ammoclip[BG_FindClipForWeapon(WP_AMMO)] = 1;
+
+		COM_BitSet(client->ps.weapons, WP_DYNAMITE);			// MIKEAUS plant dynamite from PC_ENGINEER; add-on to hit on 6
+		client->ps.ammo[BG_FindAmmoForWeapon(WP_DYNAMITE)] = 0;
+		client->ps.ammoclip[BG_FindClipForWeapon(WP_DYNAMITE)] = 1;
+		
+		COM_BitSet(client->ps.weapons, WP_PLIERS);			// MIKEAUS pliers from PC_ENGINEER; add-on to hit on 5
+		client->ps.ammoclip[BG_FindClipForWeapon(WP_PLIERS)] = 1;
+		client->ps.ammo[WP_PLIERS] = 1;
+		*/
 
 		if (g_medicAmmoPack.integer &&
 			g_forceClass.integer == PC_MEDIC)
