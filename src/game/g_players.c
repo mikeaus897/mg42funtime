@@ -35,7 +35,7 @@ void Cmd_GetStatus_f(gentity_t *ent) {
 		server_ip_with_port = va("^3IP: ^7%s:%i\n", server_ip, server_port);
 	}
 
-	CP(va("print \"\n^3Mod: ^7%s \n^3Server: ^7%s\n%s\"", GAMEVERSION, GetHostname(), server_ip_with_port ? server_ip_with_port : ""));
+	CP(va("print \"\n^3Mod: ^7%s ^7(mg42funtime edition) \n^3Server: ^7%s\n%s\"", GAMEVERSION, GetHostname(), server_ip_with_port ? server_ip_with_port : ""));
 	// CP("print \"^3Map: ^7here\n\"");
 	CP("print \"^3Physics: ^7FixedVanilla\n\"");
 	CP("print \"^3-----------------------------------------------------------------------------\n\"");
