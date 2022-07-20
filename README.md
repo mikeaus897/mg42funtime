@@ -19,8 +19,8 @@ make sure gameserver start script (start.sh) has executable attributes and right
 - chmod +x ./start.sh to give gameserver start script executable attributes rights
 
 # Main .wolf/ folder structure:
-.wolf/start.sh - gameserver starting script;
-.wolf/wolfded.x86 - main gameserver program;
+- .wolf/start.sh - gameserver starting script;
+- .wolf/wolfded.x86 - main gameserver program;
 .wolf/banned.txt - ip addresses banned from connecting to gameserver in format 1.1.1.1/32, can be edited during gameserver runnings without closing or restarting gameserver, gameserver do file checks every 30 seconds and every client connection;
 .wolf/main/ - folder containing all maps .pk3 files;
 .wolf/rtcwPub/qagame.mp.i386.so - gameserver gameplay library;
