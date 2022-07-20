@@ -1,21 +1,24 @@
-# mg42funtime library
-mg42funtime library expansion based on rtcwpub
+# rtcwPub mg42funtime library edition
+mg42funtime library expansion based on rtcwpub https://github.com/nobowned/rtcwPub
 
-system recommendations:
-debian 11.1 (bullseye) i386, repository https://cdimage.debian.org/debian-cd/current/i386/iso-cd/debian-11.1.0-i386-netinst.iso
-make
-nasm
-gcc
+# System recommendations:
 
-compilation:
-for wolfded.x86 - in /src/unix/ : make server
-for qagame.mp.i386.so - in /src/game/ : make
+debian 11.4 (bullseye) i386, repository https://cdimage.debian.org/debian-cd/current/i386/iso-cd/debian-11.4.0-i386-netinst.iso
 
-additional notes :
-make sure start script (start.sh) has executable attributes and rights
-chmod +x ./start.sh to give gameserver start script executable attributes rights
+# Compilation requirement (sudo apt install):
+- sudo apt install make
+- sudo apt install nasm
+- sudo apt install gcc
 
-main .wolf/ folder structure:
+# HOWTO compile:
+- for wolfded.x86       - goto /src/unix/ : make server
+- for qagame.mp.i386.so - goto /src/game/ : make
+
+# Additional notes :
+make sure gameserver start script (start.sh) has executable attributes and rights
+- chmod +x ./start.sh to give gameserver start script executable attributes rights
+
+# Main .wolf/ folder structure:
 .wolf/start.sh - gameserver starting script;
 .wolf/wolfded.x86 - main gameserver program;
 .wolf/banned.txt - ip addresses banned from connecting to gameserver in format 1.1.1.1/32, can be edited during gameserver runnings without closing or restarting gameserver, gameserver do file checks every 30 seconds and every client connection;
