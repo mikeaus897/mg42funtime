@@ -906,7 +906,9 @@ Checks and potentially sets STAT_MAX_HEALTH for both teams
 void CheckMaxHealth()
 {
 	int numMedics = 0;
-	int starthealth = 100;
+	// int starthealth = 100;	// MIKEAUS disable hardset starthealth = 100 to read g_startHealthAmount and replace hardcoded set starthealth amount
+	int startHealthAmount = g_startHealthAmount.integer;	// MIKEAUS added cvar in deathmatch.cfg for g_startHealthAmount, settings amount of health for all PC_classes
+	int starthealth = startHealthAmount			// MIKEAUS added cvar in deathmatch.cfg for g_startHealthAmount, settings amount of health for all PC_classes
 	int i, team;
 	gclient_t *cl;
 

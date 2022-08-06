@@ -1587,6 +1587,7 @@ extern vmCvar_t		g_automg42LightIntensity;
 extern vmCvar_t		g_automg42Health;
 extern vmCvar_t		g_automg42Disable;
 extern vmCvar_t		g_automg42TowerCollapse;
+extern vmCvar_t		g_startHealthAmount;	// MIKEAUS added cvar in deathmatch.cfg for g_startHealthAmount, settings amount of health for all PC_classes
 
 // Modes
 extern vmCvar_t		g_deathmatch;
