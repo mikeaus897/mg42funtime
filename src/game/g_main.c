@@ -248,6 +248,7 @@ vmCvar_t	g_giveLife;				// Allows clients to give each other lives.
 vmCvar_t	g_giveLifeRequiredDamage;		// Damage required before a life can be given.
 vmCvar_t	g_giveLifeRequiredRevives;		// Revives required before a life can be given
 vmCvar_t	g_allowRespawnListing;	// Allows seeing teammates respawn count with command /respawns.
+vmCvar_t	g_startHealthAmount;	// MIKEAUS added cvar in deathmatch.cfg for g_startHealthAmount, settings amount of health for all PC_classes
 
 // Modes
 vmCvar_t	g_deathmatch;			// Death Match
@@ -592,7 +593,8 @@ cvarTable_t		gameCvarTable[] = {
 	{ &g_automg42Disable, "g_automg42Disable", "1", CVAR_LATCH, qfalse },
 	{ &g_automg42TowerCollapse, "g_automg42TowerCollapse", "1", CVAR_LATCH, qfalse },
 	{ &g_archiveLogDay, "g_archiveLogDay", "0", CVAR_LATCH, qfalse },
-
+	{ &g_startHealth, "g_startHealthAmount", "100", CVAR_ARCHIVE | CVAR_LATCH, 0, qfalse },		// MIKEAUS added cvar in deathmatch.cfg for g_startHealthAmount, settings amount of health for all PC_classes
+	
 	// Weapon
 	{ &g_dropHealth, "g_dropHealth", "0", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
 	{ &g_dropNades, "g_dropNades", "0", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
