@@ -593,7 +593,7 @@ cvarTable_t		gameCvarTable[] = {
 	{ &g_automg42Disable, "g_automg42Disable", "1", CVAR_LATCH, qfalse },
 	{ &g_automg42TowerCollapse, "g_automg42TowerCollapse", "1", CVAR_LATCH, qfalse },
 	{ &g_archiveLogDay, "g_archiveLogDay", "0", CVAR_LATCH, qfalse },
-	{ &g_startHealth, "g_startHealthAmount", "100", CVAR_ARCHIVE | CVAR_LATCH, 0, qfalse },		// MIKEAUS added cvar in deathmatch.cfg for g_startHealthAmount, settings amount of health for all PC_classes
+	{ &g_startHealthAmount, "g_startHealthAmount", "100", CVAR_ARCHIVE | CVAR_LATCH, 0, qfalse },		// MIKEAUS added cvar in deathmatch.cfg for g_startHealthAmount, settings amount of health for all PC_classes
 	
 	// Weapon
 	{ &g_dropHealth, "g_dropHealth", "0", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
