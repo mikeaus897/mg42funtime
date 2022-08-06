@@ -935,10 +935,10 @@ void CheckMaxHealth()
 		}
 
 		// compute health mod	
-		starthealth = 100 + 10 * numMedics;
-		if (starthealth > 125 || g_ffa.integer) 
+		starthealth = startHealthAmount + 10 * numMedics;		// MIKEAUS original code: starthealth = 100 + 10 * numMedics;
+		if (starthealth > startHealthAmount + 25 || g_ffa.integer)	// MIKEAUS original code: if (starthealth > 125 || g_ffa.integer)
 		{
-			starthealth = 125;
+			starthealth = startHealthAmount + 25;			// MIKEAUS original code: starthealth = 125;
 		}
 
 		// give everybody health mod in stat_max_health
