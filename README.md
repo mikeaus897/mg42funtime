@@ -16,7 +16,7 @@ debian 11.4 (bullseye) i386, repository https://cdimage.debian.org/debian-cd/cur
 
 # Additional notes :
 make sure gameserver start script (start.sh) has executable attributes and rights
-- chmod +x ./start.sh to give gameserver start script executable attributes rights
+- chmod +x start.sh (to give gameserver start script executable attributes rights)
 
 # Main /.wolf/ folder files and structure:
 - .wolf/start.sh - gameserver starting script;
