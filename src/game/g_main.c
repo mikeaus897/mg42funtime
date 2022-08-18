@@ -616,7 +616,7 @@ cvarTable_t		gameCvarTable[] = {
 	{ &g_venomClips, "g_venomClips", "0", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
 	{ &g_mauserClips, "g_mauserClips", "1", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
 	{ &g_panzerClips, "g_panzerClips", "1", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },   // MIKEAUS added cvar in deathmatch.cfg for g_panzerClips, amount of ammo panzer has in reserve
-	{ &g_panzerClips, "g_flamerClips", "200", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },   // MIKEAUS added cvar in deathmatch.cfg for g_flamerClips, amount of ammo flamer has in reserve
+	{ &g_flamerClips, "g_flamerClips", "1", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },   // MIKEAUS added cvar in deathmatch.cfg for g_flamerClips, amount of ammo flamer has in reserve
 	{ &g_maxTeamPF, "g_maxTeamPF", "-1", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
 	{ &g_maxTeamSniper, "g_maxTeamSniper", "-1", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
 	{ &g_maxTeamVenom, "g_maxTeamVenom", "-1", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue },
