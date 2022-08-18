@@ -1613,6 +1613,7 @@ extern vmCvar_t		g_pistolClips;
 extern vmCvar_t		g_venomClips;
 extern vmCvar_t		g_mauserClips;
 extern vmCvar_t		g_panzerClips;   // MIKEAUS added cvar in deathmatch.cfg for g_panzerClips, amount of ammo panzer has in reserve
+extern vmCvar_t		g_flamerClips;   // MIKEAUS added cvar in deathmatch.cfg for g_flamerClips, amount of ammo flamer has in reserve
 extern vmCvar_t		g_maxTeamPF;
 extern vmCvar_t		g_maxTeamSniper;
 extern vmCvar_t		g_maxTeamVenom;
