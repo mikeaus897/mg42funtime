@@ -274,6 +274,7 @@ vmCvar_t	g_pistolClips;		// How many clips pistol gets
 vmCvar_t	g_venomClips;		// How many clips venom starts with
 vmCvar_t	g_mauserClips;		// How many clips mauser starts with
 vmCvar_t	g_panzerClips;		// How many clips panzer starts with   // MIKEAUS added cvar in deathmatch.cfg for g_panzerClips, amount of ammo panzer has in reserve
+vmCvar_t	g_flamerClips;		// How many clips flamer starts with   // MIKEAUS added cvar in deathmatch.cfg for g_flamerClips, amount of ammo flamer has in reserve
 vmCvar_t	g_maxTeamPF;		// Max Pf's per team
 vmCvar_t	g_maxTeamSniper;	// Max snipers per team
 vmCvar_t	g_maxTeamVenom;		// Max venoms per team
