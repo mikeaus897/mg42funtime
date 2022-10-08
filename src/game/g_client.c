@@ -997,6 +997,7 @@ void SetWolfSpawnWeapons( gclient_t *client ) {
 	int		venomClips = g_venomClips.integer;
 	int		mauserClips = g_mauserClips.integer;
         int		panzerClips = g_panzerClips.integer;   // MIKEAUS added cvar in deathmatch.cfg for g_panzerClips, amount of Clips panzer
+	int		flamerClips = g_flamerClips.integer;   // MIKEAUS added cvar in deathmatch.cfg for g_flamerClips, amount of Clips flamer
 	// nades
 	int		engNades = g_engNades.integer;
 	int		soldNades = g_soldNades.integer;
@@ -1316,7 +1317,8 @@ void SetWolfSpawnWeapons( gclient_t *client ) {
 					client->pers.restrictedWeapon = WP_FLAMETHROWER;
 				}
 				COM_BitSet(client->ps.weapons, WP_FLAMETHROWER);
-				client->ps.ammoclip[BG_FindAmmoForWeapon(WP_FLAMETHROWER)] = 200;
+				// client->ps.ammoclip[BG_FindAmmoForWeapon(WP_FLAMETHROWER)] = 200;	// MIKEAUS original code
+				client->ps.ammoclip[BG_FindAmmoForWeapon(WP_FLAMETHROWER)] = (flamerClips);	// MIKEAUS added cvar in deathmatch.cfg for g_flamerClips, amount of flamer clips has in reserve
 				client->ps.weapon = WP_FLAMETHROWER;
 				break;
 
