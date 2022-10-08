@@ -3875,6 +3875,30 @@ void Cmd_DisplayServerCredit_f(gentity_t *ent) {
 	CPS(ent, "sound/multiplayer/dynamite_01.wav");
 }
 
+// MIKEAUS - added HOWTO play MG42 mode command for beginner players
+void Cmd_DisplayHowToMg_f(gentity_t *ent) {
+	CP("print \"^3-----------------------------------------------------------------------------\n\"");
+	CP("print \"^7HOWTO play MG42 mode for beginners                                           \n\"");
+	CP("print \"^7Press ` to open console and type commands                                    \n\"");
+	CP("print \"^7Turn on dynamic lights so you can see MG42 guns aura: /r_dynamiclight 1      \n\"");
+	CP("print \"^7Bind your keys for easy use during MG42 battle: /bind m automg42             \n\"");
+	CP("print \"^7                                                /bind n mini                 \n\"");
+	CP("print \"^7                                                /bind b nadepack             \n\"");
+	CP("print \"^7Start as Engineer and put MGs, use pliers to engage them.                    \n\"");
+	CP("print \"^7Givelife to your teammates during gameplay: /givelife name                   \n\"");
+	CP("print \"^7Check your teammates lives: /lives                                           \n\"");
+	CP("print \"^7List players information: /getstatus                                         \n\"");
+	CP("print \"^7Display maps list available on server: /maps                                 \n\"");
+	CP("print \"^7Vote to change maps: /callvote map mapname                                   \n\"");
+	CP("print \"^7Lean left or right and throw granades spotting                               \n\"");
+	CP("print \"^7                                                                             \n\"");
+	CP("print \"^3Join Discord Chat: ^7www.tinyurl.com/mg42funtime                             \n\"");
+	CP("print \"^3-----------------------------------------------------------------------------\n\"");
+	CP("print \"^3Source Code: ^7github.com/mikeaus897/mg42funtime\n\"");
+	CPS(ent, "sound/multiplayer/dynamite_01.wav");
+}
+
+
 void Cmd_GiveLife_f(gentity_t *ent) {
 	int i;
 	char argument[ADMIN_ARG_SIZE];
@@ -4165,6 +4189,8 @@ static const player_command_t playerCommands[] = {
 	{ "smoke sg", "Throws smoke grenade (must be LT)", "/smoke or /sg", Cmd_Smoke, qfalse },
 	{ "draw_hitboxes" , "Toggles hitbox drawing when g_drawHitBoxes is enabled", "/draw_hitboxes", Cmd_ToggleDrawHitBoxes_f, qfalse },
 	{ "about credit info", "Display server library information", "", Cmd_DisplayServerCredit_f, qfalse },
+	{ "mg mghelp howtomg mghowto", "Information HOWTO play MG42 mode", "", Cmd_DisplayHowToMg_f, qfalse },
+	
 #ifdef _DEBUG
 	{ "test", "Secrets!", "/test", Cmd_Test_f, qfalse },
 	{ "test2", "Moar Secrets!", "/test2", Cmd_Test2_f, qfalse },
